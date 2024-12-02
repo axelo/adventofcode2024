@@ -1,12 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 
-set -e -o pipefail
+set -e
 
 failures=$((0))
 
 testday () {
-    local answer_example answer
-
     NO_TRACE=1 ./run.sh "$1" "$2"
 
     answer_example=$("./$1$2.out" < "$1.example")
