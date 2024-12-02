@@ -1,5 +1,6 @@
 #include <assert.h> // assert
 #include <limits.h> // INT_MAX
+#include <stdbool.h>
 #include <stdint.h> // int_t
 #include <stdio.h>  // flockfile, funlockfile, getchar_unlocked, ungetcs
 #include <stdlib.h> // qsort, llabs
@@ -61,6 +62,33 @@ static void aoc_read_from_stdin_until_digit(void) {
     if (c != EOF) ungetc(c, stdin);
 }
 
+// will chomp all new lines found
+static bool aoc_read_from_stdin_until_digit_stop_on_newlines(void) {
+    bool unget = true;
+    bool newlines_found = false;
+    int c;
+
+    flockfile(stdin);
+
+    do {
+        c = getchar_unlocked();
+
+        if (c == EOF || c == '\n') {
+            while (c == '\n') c = getchar_unlocked();
+
+            unget = c != EOF;
+            newlines_found = true;
+            break;
+        }
+    } while (c < '0' || c > '9');
+
+    funlockfile(stdin);
+
+    if (unget) ungetc(c, stdin);
+
+    return newlines_found;
+}
+
 static int aoc_compare_s64_ptr(const int64_t* a, const int64_t* b) {
     if (*a < *b)      return -1;
     else if (*a > *b) return 1;
@@ -69,4 +97,8 @@ static int aoc_compare_s64_ptr(const int64_t* a, const int64_t* b) {
 
 static void aoc_sort_in_place_s64(int n, int64_t xs[n]) {
     qsort(xs, (size_t)n, sizeof(int64_t), (int (*)(const void *, const void *)) aoc_compare_s64_ptr);
+}
+
+static inline int aoc_sign_bit_s64(int64_t x) {
+    return (uint64_t)x >> 63;
 }
