@@ -1,5 +1,3 @@
-// cc -std=c17 -Werror -Wall -Wpedantic -Wconversion -Wswitch-enum -Wno-unused-function -fsanitize=undefined,integer,nullability -O3 -g 01a.c -o 01a.out && ./01a.out < 01.example
-
 #include "aoc.h"
 
 #define N 1000
