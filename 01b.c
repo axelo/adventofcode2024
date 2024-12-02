@@ -27,9 +27,8 @@ int main(void) {
     for (int i = 0; i < n; ++i) {
         int nfound = 0;
 
-        for (int j = 0; j < n; ++j) {
+        for (int j = 0; j < n; ++j)
             if (location_ids_a[i] == location_ids_b[j]) ++nfound;
-        }
 
         sum += nfound * location_ids_a[i];
     }

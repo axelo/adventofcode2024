@@ -48,9 +48,9 @@ static RES_READ_NUMBER aoc_read_from_stdin_base10_s64(int64_t* ptr_to_s64) {
 }
 
 static void aoc_read_from_stdin_until_digit(void) {
-    flockfile(stdin);
-
     int c;
+
+    flockfile(stdin);
 
     do {
         c = getchar_unlocked();
@@ -62,11 +62,11 @@ static void aoc_read_from_stdin_until_digit(void) {
 }
 
 static int aoc_compare_s64_ptr(const int64_t* a, const int64_t* b) {
-    if (*a < *b) return -1;
+    if (*a < *b)      return -1;
     else if (*a > *b) return 1;
-    else return 0;
+    else              return 0;
 }
 
-static void aoc_sort_in_place_s64(size_t n, int64_t xs[n]) {
-    qsort(xs, n, sizeof(int64_t), (int (*)(const void *, const void *)) aoc_compare_s64_ptr);
+static void aoc_sort_in_place_s64(int n, int64_t xs[n]) {
+    qsort(xs, (size_t)n, sizeof(int64_t), (int (*)(const void *, const void *)) aoc_compare_s64_ptr);
 }
