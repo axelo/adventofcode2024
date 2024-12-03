@@ -5,15 +5,9 @@
 #include <stdio.h>  // flockfile, funlockfile, getchar_unlocked, ungetcs
 #include <stdlib.h> // qsort, llabs
 
-typedef enum {
-    RES_READ_NUMBER_OK            = 0,
-    RES_READ_NUMBER_ERR_NO_DIGITS = 1,
-    RES_READ_NUMBER_ERR_OVERFLOW  = 2,
-} RES_READ_NUMBER;
-
 #define MAX_INT_BASE10_ONE_BEFORE (INT_MAX / 10)
 
-static RES_READ_NUMBER aoc_read_from_stdin_base10_s64(int64_t* ptr_to_s64) {
+static bool aoc_read_from_stdin_base10_s64(int64_t* ptr_to_s64) {
     int64_t buffer[32];
     int len = 0;
     int c;
@@ -32,12 +26,12 @@ static RES_READ_NUMBER aoc_read_from_stdin_base10_s64(int64_t* ptr_to_s64) {
 
     if (c != EOF) ungetc(c, stdin);
 
-    if (len == 0) return RES_READ_NUMBER_ERR_NO_DIGITS;
+    if (len == 0) return false;
 
     int64_t num = 0;
 
     for (int i = 0; i < len; ++i) {
-        if (num > MAX_INT_BASE10_ONE_BEFORE) return RES_READ_NUMBER_ERR_OVERFLOW;
+        assert(num <= MAX_INT_BASE10_ONE_BEFORE);
 
         num *= 10;
         num += buffer[i];
@@ -45,7 +39,79 @@ static RES_READ_NUMBER aoc_read_from_stdin_base10_s64(int64_t* ptr_to_s64) {
 
     *ptr_to_s64 = num;
 
-    return RES_READ_NUMBER_OK;
+    return true;
+}
+
+static bool aoc_read_from_stdin_char_and_chomp(char expected_char) {
+    int c = getchar();
+    bool found = c == expected_char;
+
+    if (!found && c != EOF) ungetc(c, stdin);
+
+    return found;
+}
+
+static bool aoc_read_from_stdin_until_string_and_chomp(const char* string) {
+    const char* source_ptr = string;
+    int source_c = -1;
+
+    flockfile(stdin);
+
+    for (;;) {
+        source_c = *source_ptr++;
+
+        if (source_c == 0) break;
+
+        int c = getchar_unlocked();
+
+        if (c == EOF) break;
+
+        if (c != source_c) source_ptr = string;
+    }
+
+    funlockfile(stdin);
+
+    return source_c == 0;
+}
+
+// returns 0 if no strings found, otherwise 1 for first, 2 for second, 3 for third.
+static int aoc_read_from_stdin_until_one_of_string_and_chomp(const char* s1, const char* s2, const char* s3) {
+    const char* s1_ptr = s1;
+    const char* s2_ptr = s2;
+    const char* s3_ptr = s3;
+
+    int i = 0;
+
+    flockfile(stdin);
+
+    for (;;) {
+        int c1 = *s1_ptr++;
+        int c2 = *s2_ptr++;
+        int c3 = *s3_ptr++;
+
+        if (c1 == 0) {
+            i = 1;
+            break;
+        } else if (c2 == 0) {
+            i = 2;
+            break;
+        } else if (c3 == 0) {
+            i = 3;
+            break;
+        }
+
+        int c = getchar_unlocked();
+
+        if (c == EOF) break;
+
+        if (c != c1) s1_ptr = s1;
+        if (c != c2) s2_ptr = s2;
+        if (c != c3) s3_ptr = s3;
+    }
+
+    funlockfile(stdin);
+
+    return i;
 }
 
 static void aoc_read_from_stdin_until_digit(void) {
