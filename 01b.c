@@ -11,10 +11,10 @@ int main(void) {
     int n = 0;
 
     while (!feof(stdin)) {
-        assert(aoc_read_from_stdin_base10_s64(ptr_location_id_a++) == RES_READ_NUMBER_OK);
+        assert(aoc_read_from_stdin_base10_s64(ptr_location_id_a++));
         aoc_read_from_stdin_until_digit();
 
-        assert(aoc_read_from_stdin_base10_s64(ptr_location_id_b++) == RES_READ_NUMBER_OK);
+        assert(aoc_read_from_stdin_base10_s64(ptr_location_id_b++));
         aoc_read_from_stdin_until_digit();
 
         assert(n++ < N);
