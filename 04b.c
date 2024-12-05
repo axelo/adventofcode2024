@@ -135,24 +135,24 @@ static int search_diagonally(int s) {
 }
 
 int main (void) {
-    int s = 0;
+    int size = 0;
     int row = 0;
 
-    assert((s = aoc_read_from_stdin_line(N, letters[row++])) < N);
-    assert(s > 0);
+    assert((size = aoc_read_from_stdin_line(N, letters[row++])) <= N);
+    assert(size > 0);
 
     while (!feof(stdin)) {
         int read = aoc_read_from_stdin_line(N, letters[row]);
 
         if (read) {
-            assert(read == s);
+            assert(read == size);
             assert(++row < N);
         }
     }
 
-    assert(row == s);
+    assert(row == size);
 
-    int ncoords = search_diagonally(s);
+    int ncoords = search_diagonally(size);
     int xs = 0;
 
     for (int j = 0; j < ncoords; ++j) {

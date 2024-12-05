@@ -67,10 +67,10 @@ static int search_diagonally(int s) {
         // Down right
         if (match_next_letter(&dr, letters[y][y])) ++n;
 
-        // // Up left
+        // Up left
         if (match_next_letter(&ul, letters[s - y - 1][s - y - 1])) ++n;
 
-        // // Down left
+        // Down left
         if (match_next_letter(&dl, letters[y][s - y - 1])) ++n;
 
         // Up right
@@ -119,24 +119,24 @@ static int search_diagonally(int s) {
 }
 
 int main (void) {
-    int s = 0;
+    int size = 0;
     int row = 0;
 
-    assert((s = aoc_read_from_stdin_line(N, letters[row++])) < N);
-    assert(s > 0);
+    assert((size = aoc_read_from_stdin_line(N, letters[row++])) <= N);
+    assert(size > 0);
 
     while (!feof(stdin)) {
         int read = aoc_read_from_stdin_line(N, letters[row]);
 
         if (read) {
-            assert(read == s);
+            assert(read == size);
             assert(++row < N);
         }
     }
 
-    assert(row == s);
+    assert(row == size);
 
-    int n = search_straight(s) + search_diagonally(s);
+    int n = search_straight(size) + search_diagonally(size);
 
     printf("%d\n", n);
     return 0;
