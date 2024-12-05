@@ -155,6 +155,24 @@ static bool aoc_read_from_stdin_until_digit_stop_on_newlines(void) {
     return newlines_found;
 }
 
+static int aoc_read_from_stdin_line(int n, int source[n]) {
+    int i = 0;
+
+    flockfile(stdin);
+
+    for (;;) {
+        int c = getchar_unlocked();
+
+        if (c == '\n' || c == EOF || i >= n) break;
+
+        source[i++] = c;
+    }
+
+    funlockfile(stdin);
+
+    return i;
+}
+
 static int aoc_compare_s64_ptr(const int64_t* a, const int64_t* b) {
     if (*a < *b)      return -1;
     else if (*a > *b) return 1;

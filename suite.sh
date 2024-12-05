@@ -7,7 +7,7 @@ failures=$((0))
 testday () {
     NO_TRACE=1 ./run.sh "$1" "$2"
 
-    answer_example=$("./$1$2.out" < "$1.example" | tail -n 1)
+    answer_example=$("./$1$2.out" < "$1${5-}.example" | tail -n 1)
 
     if [ "$answer_example" = "$3" ]; then
         printf "%s%s - example - ok\n" "$1" "$2"
@@ -32,6 +32,8 @@ testday 02 a 2 383
 testday 02 b 4 436
 testday 03 a 161 185797128
 testday 03 b 48 89798695
+testday 04 a 18 2642
+testday 04 b 9 1974
 
 if [ $failures -eq 0 ]; then
     printf 'success\n'
