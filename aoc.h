@@ -183,6 +183,10 @@ static void aoc_sort_in_place_s64(int n, int64_t xs[n]) {
     qsort(xs, (size_t)n, sizeof(int64_t), (int (*)(const void *, const void *)) aoc_compare_s64_ptr);
 }
 
+static void aoc_sort_in_place_s32(int n, int32_t xs[n], int (*compare)(const int32_t *, const int32_t *)) {
+    qsort(xs, (size_t)n, sizeof(int32_t), (int (*)(const void *, const void *)) compare);
+}
+
 static inline int aoc_sign_bit_s64(int64_t x) {
     return (uint64_t)x >> 63;
 }
