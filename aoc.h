@@ -163,7 +163,12 @@ static int aoc_read_from_stdin_line(int n, int source[n]) {
     for (;;) {
         int c = getchar_unlocked();
 
-        if (c == '\n' || c == EOF || i >= n) break;
+        if (c == '\n' || c == EOF) break;
+
+        if (i >= n) {
+            ++i;
+            break;
+        }
 
         source[i++] = c;
     }
