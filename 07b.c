@@ -94,6 +94,30 @@ static bool solvable(int i) {
     return false;
 }
 
+static bool solvable_part1(int i) {
+    int perms = 1 << (nvalues[i] - 1);
+
+    for (int p = 0; p < perms; ++p) {
+        int64_t res = values[i][0];
+
+        for (int j = 1; j < nvalues[i]; ++j) {
+            int op = (p & (1 << (j - 1))) ? 1 : 0;
+
+            int64_t value = values[i][j];
+
+            if (op == 0) res += value;
+            else if (op == 1) res *= value;
+            else assert(false);
+
+            if (res > results[i]) break;
+        }
+
+        if (res == results[i]) return true;
+    }
+
+    return false;
+}
+
 int main(void) {
     int parse_state = 0;
 
@@ -113,6 +137,7 @@ int main(void) {
             assert(aoc_read_from_stdin_base10_s64(&values[n_results][n_values++]));
 
             if (!aoc_read_from_stdin_char_and_chomp(' ')) {
+
                 if (n_values > max_n_values) max_n_values = n_values;
 
                 nvalues[n_results++] = n_values;
@@ -130,7 +155,8 @@ int main(void) {
     int64_t sum = 0;
 
     for (int i = 0; i < n_results; ++i)
-        if (solvable(i)) sum += results[i];
+        if (solvable_part1(i)) sum += results[i];
+        else  if (solvable(i))  sum += results[i];
 
     printf("%lld\n", sum);
     return 0;

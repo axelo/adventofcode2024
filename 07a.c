@@ -47,7 +47,11 @@ int main(void) {
 
                 int64_t value = values[i][j];
 
-                res = op == 0 ? res + value : res * value;
+                if (op == 0) res += value;
+                else if (op == 1) res *= value;
+                else assert(false);
+
+                if (res > results[i]) break;
             }
 
             if (res == results[i]) {
