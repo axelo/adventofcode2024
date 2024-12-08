@@ -5,7 +5,7 @@
 #include <stdio.h>  // flockfile, funlockfile, getchar_unlocked, ungetcs
 #include <stdlib.h> // qsort, llabs
 
-#define MAX_INT_BASE10_ONE_BEFORE (INT_MAX / 10)
+#define MAX_INT64_BASE10_ONE_BEFORE (INT64_MAX / 10)
 
 static bool aoc_read_from_stdin_base10_s64(int64_t* ptr_to_s64) {
     int64_t buffer[32];
@@ -31,7 +31,7 @@ static bool aoc_read_from_stdin_base10_s64(int64_t* ptr_to_s64) {
     int64_t num = 0;
 
     for (int i = 0; i < len; ++i) {
-        assert(num <= MAX_INT_BASE10_ONE_BEFORE);
+        assert(num <= MAX_INT64_BASE10_ONE_BEFORE);
 
         num *= 10;
         num += buffer[i];
@@ -114,7 +114,7 @@ static int aoc_read_from_stdin_until_one_of_string_and_chomp(const char* s1, con
     return i;
 }
 
-static void aoc_read_from_stdin_until_digit(void) {
+static bool aoc_read_from_stdin_until_digit(void) {
     int c;
 
     flockfile(stdin);
@@ -126,6 +126,8 @@ static void aoc_read_from_stdin_until_digit(void) {
     funlockfile(stdin);
 
     if (c != EOF) ungetc(c, stdin);
+
+    return c != EOF;
 }
 
 // will chomp all new lines found
