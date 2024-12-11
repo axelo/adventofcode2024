@@ -53,22 +53,7 @@ static bool got_stuck(Guard g, int size, int ox, int oy) {
 }
 
 int main(void) {
-    int row = 0;
-    int size = aoc_read_from_stdin_line(N, map[row++]);
-    assert(size > 0 && size <= N);
-
-    while (!feof(stdin)) {
-        assert(row < N);
-        int read = aoc_read_from_stdin_line(N, map[row]);
-
-        if (!read) break;
-
-        assert(read == size);
-
-        ++row;
-    }
-
-    assert(row == size);
+    int size = aoc_read_square_map_from_stdin(N, map);
 
     Guard g = find_start_pos(size);
 
