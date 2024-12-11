@@ -180,6 +180,26 @@ static int aoc_read_from_stdin_line(int n, int source[n]) {
     return i;
 }
 
+static int aoc_read_square_map_from_stdin(int n, int map[n][n]) {
+    int row = 0;
+    int size = aoc_read_from_stdin_line(n, map[row++]);
+    assert(size > 0 && size <= n);
+
+    while (!feof(stdin)) {
+        assert(row < n);
+        int read = aoc_read_from_stdin_line(n, map[row]);
+
+        if (!read) break;
+
+        assert(read == size);
+
+        ++row;
+    }
+
+    assert(row == size);
+    return size;
+}
+
 static int aoc_compare_s64_ptr(const int64_t* a, const int64_t* b) {
     if (*a < *b)      return -1;
     else if (*a > *b) return 1;
