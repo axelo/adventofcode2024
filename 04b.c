@@ -138,11 +138,11 @@ int main (void) {
     int size = 0;
     int row = 0;
 
-    assert((size = aoc_read_from_stdin_line(N, letters[row++])) <= N);
+    assert((size = aoc_read_from_stdin_line(aoc_int_as_read, N, letters[row++])) <= N);
     assert(size > 0);
 
     while (!feof(stdin)) {
-        int read = aoc_read_from_stdin_line(N, letters[row]);
+        int read = aoc_read_from_stdin_line(aoc_int_as_read, N, letters[row]);
 
         if (read) {
             assert(read == size);

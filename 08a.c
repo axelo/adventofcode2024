@@ -15,7 +15,7 @@ typedef struct {
 static Pair pairs[P];
 
 int main(void) {
-    int size = aoc_read_square_map_from_stdin(N, map);
+    int size = aoc_read_square_map_from_stdin(aoc_int_as_read, N, map);
 
     int n_pairs = 0;
 
