@@ -12,7 +12,7 @@ static int map[N][N];
 
 static Point start_positions[N_SP];
 
-int start_hiking(int d, int size, int x, int y) {
+int start_hiking(int size, int x, int y) {
     int h = map[y][x];
 
     if (h >= 9) return 1;
@@ -25,16 +25,16 @@ int start_hiking(int d, int size, int x, int y) {
     int n_found = 0;
 
     if (xr < size && (map[y][xr] - h) == 1)
-        n_found += start_hiking(d + 1, size, xr, y);
+        n_found += start_hiking(size, xr, y);
 
     if (yd < size && (map[yd][x] - h) == 1)
-        n_found += start_hiking(d + 1, size, x, yd);
+        n_found += start_hiking(size, x, yd);
 
     if (xl >= 0 && (map[y][xl] - h) == 1)
-        n_found += start_hiking(d + 1, size, xl, y);
+        n_found += start_hiking(size, xl, y);
 
     if (yu >= 0 && (map[yu][x] - h) == 1)
-        n_found += start_hiking(d + 1, size, x, yu);
+        n_found += start_hiking(size, x, yu);
 
     return n_found;
 }
@@ -56,7 +56,7 @@ int main(void) {
     int sum = 0;
 
     for (int i = 0; i < n_start_positions; ++i)
-        sum += start_hiking(0, size, start_positions[i].x, start_positions[i].y);
+        sum += start_hiking(size, start_positions[i].x, start_positions[i].y);
 
     printf("%d\n", sum);
     return 0;
