@@ -157,7 +157,7 @@ static bool aoc_read_from_stdin_until_digit_stop_on_newlines(void) {
     return newlines_found;
 }
 
-static int aoc_read_from_stdin_line(int n, int source[n]) {
+static int aoc_read_from_stdin_line(int (*map_fn)(int), int n, int source[n]) {
     int i = 0;
 
     flockfile(stdin);
@@ -172,7 +172,7 @@ static int aoc_read_from_stdin_line(int n, int source[n]) {
             break;
         }
 
-        source[i++] = c;
+        source[i++] = map_fn(c);
     }
 
     funlockfile(stdin);
@@ -180,14 +180,22 @@ static int aoc_read_from_stdin_line(int n, int source[n]) {
     return i;
 }
 
-static int aoc_read_square_map_from_stdin(int n, int map[n][n]) {
+static int aoc_int_as_read(int i) {
+    return i;
+}
+
+static int aoc_digit_to_int(int i) {
+    return i - '0';
+}
+
+static int aoc_read_square_map_from_stdin(int (*map_fn)(int), int n, int map[n][n]) {
     int row = 0;
-    int size = aoc_read_from_stdin_line(n, map[row++]);
+    int size = aoc_read_from_stdin_line(map_fn, n, map[row++]);
     assert(size > 0 && size <= n);
 
     while (!feof(stdin)) {
         assert(row < n);
-        int read = aoc_read_from_stdin_line(n, map[row]);
+        int read = aoc_read_from_stdin_line(map_fn, n, map[row]);
 
         if (!read) break;
 
