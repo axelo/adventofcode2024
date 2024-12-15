@@ -51,6 +51,27 @@ static bool aoc_read_from_stdin_char_and_chomp(char expected_char) {
     return found;
 }
 
+static bool aoc_read_from_stdin_string_and_chomp(const char* expected_string) {
+    const char* source_ptr = expected_string;
+    int source_c = -1;
+
+    flockfile(stdin);
+
+    for (;;) {
+        source_c = *source_ptr++;
+
+        if (source_c == 0) break;
+
+        int c = getchar_unlocked();
+
+        if (c!= source_c || c == EOF) break;
+    }
+
+    funlockfile(stdin);
+
+    return source_c == 0;
+}
+
 static bool aoc_read_from_stdin_until_string_and_chomp(const char* string) {
     const char* source_ptr = string;
     int source_c = -1;
