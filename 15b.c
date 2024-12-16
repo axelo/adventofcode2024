@@ -76,7 +76,7 @@ int main(void) {
     r_pos_found:
     assert(rx != 0 && ry != 0);
 
-    Box boxes[100];
+    Box boxes[B];
 
     for (int i = 0; i < n_instructions; ++i) {
         for (int j = 0; j < n_moves; ++j) {
