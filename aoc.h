@@ -11,15 +11,23 @@ static bool aoc_read_from_stdin_base10_s64(int64_t* ptr_to_s64) {
     int64_t buffer[32];
     int len = 0;
     int c;
+    bool negative = false;
 
     flockfile(stdin);
 
-    for (;;) {
-        c = getchar_unlocked();
+    c = getchar_unlocked();
 
+    if (c == '-') {
+        negative = true;
+        c = getchar_unlocked();
+    }
+
+    for (;;) {
         if (c < '0' || c > '9') break;
 
         buffer[len++] = (int64_t)(c - '0');
+
+        c = getchar_unlocked();
     }
 
     funlockfile(stdin);
@@ -37,7 +45,7 @@ static bool aoc_read_from_stdin_base10_s64(int64_t* ptr_to_s64) {
         num += buffer[i];
     }
 
-    *ptr_to_s64 = num;
+    *ptr_to_s64 = negative ? -num : num;
 
     return true;
 }

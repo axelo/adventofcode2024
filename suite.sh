@@ -51,6 +51,8 @@ testday 11 b 65601038650482 228449040027793
 testday 12 a 1930 1370100
 testday 13 a 480 40369
 testday 13 b 875318608908 72587986598368
+testday 14 a 21 220971520
+testday 14 b 1 6355
 
 if [ $failures -eq 0 ]; then
     printf 'success\n'
