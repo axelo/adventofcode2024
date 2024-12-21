@@ -54,9 +54,8 @@ int main(void) {
 
     int n_bytes = size == G ? 1024 : 12;
 
-    for (int i = 0; i < n_bytes; ++i) {
+    for (int i = 0; i < n_bytes; ++i)
         mem[coords[i].y][coords[i].x] = '#';
-    }
 
     int dist = shortest_path(size, 0, 0, 0);
 
