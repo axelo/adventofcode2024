@@ -6,7 +6,7 @@ typedef struct {
     int32_t a;
     int32_t b;
     int32_t c;
-    uint16_t pc;
+    uint8_t pc;
 } Computer;
 
 #define combo(o) ((o) < 4 ? (o) : (o) == 4 ? c.a : (o) == 5 ? c.b : c.c)
