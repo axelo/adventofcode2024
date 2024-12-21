@@ -8,9 +8,9 @@
 #define MAX_INT64_BASE10_ONE_BEFORE (INT64_MAX / 10)
 
 typedef struct {
-    int x;
-    int y;
-} aoc_Point_s32;
+    uint8_t x;
+    uint8_t y;
+} aoc_Point_u8;
 
 static bool aoc_read_from_stdin_base10_s64(int64_t* ptr_to_s64) {
     int64_t buffer[32];
@@ -59,6 +59,15 @@ static bool aoc_read_from_stdin_base10_s32_truncate(int32_t* ptr_to_s32) {
     int64_t i;
     if (aoc_read_from_stdin_base10_s64(&i)) {
         *ptr_to_s32 = (int32_t)i;
+        return true;
+    }
+    return false;
+}
+
+static bool aoc_read_from_stdin_base10_u8_truncate(uint8_t* ptr_to_u8) {
+    int64_t i;
+    if (aoc_read_from_stdin_base10_s64(&i)) {
+        *ptr_to_u8 = (uint8_t)i;
         return true;
     }
     return false;
