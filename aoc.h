@@ -7,6 +7,11 @@
 
 #define MAX_INT64_BASE10_ONE_BEFORE (INT64_MAX / 10)
 
+typedef struct {
+    int x;
+    int y;
+} aoc_Point_s32;
+
 static bool aoc_read_from_stdin_base10_s64(int64_t* ptr_to_s64) {
     int64_t buffer[32];
     int len = 0;
@@ -48,6 +53,15 @@ static bool aoc_read_from_stdin_base10_s64(int64_t* ptr_to_s64) {
     *ptr_to_s64 = negative ? -num : num;
 
     return true;
+}
+
+static bool aoc_read_from_stdin_base10_s32_truncate(int32_t* ptr_to_s32) {
+    int64_t i;
+    if (aoc_read_from_stdin_base10_s64(&i)) {
+        *ptr_to_s32 = (int32_t)i;
+        return true;
+    }
+    return false;
 }
 
 static bool aoc_read_from_stdin_char_and_chomp(char expected_char) {
@@ -253,4 +267,13 @@ static void aoc_sort_in_place_s32(int n, int32_t xs[n], int (*compare)(const int
 
 static inline int aoc_sign_bit_s64(int64_t x) {
     return (uint64_t)x >> 63;
+}
+
+static void aoc_print_map(int n, int map[n][n], int size) {
+    for (int y = 0; y < size; ++y) {
+        for (int x = 0; x < size; ++x) {
+            putchar(map[y][x]);
+        }
+        putchar('\n');
+    }
 }
